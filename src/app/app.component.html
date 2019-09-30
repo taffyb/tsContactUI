@@ -1,0 +1,10 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+<ul class="main-menu">
+	<li class="tab" [ngClass]="{'active':activeTab==Tabs.DASHBOARD}" (click)="activeTab=Tabs.DASHBOARD"><a routerLink="/dashboard">Dashboard</a></li>
+	<li *ngFor="let g of gameService.getActiveGames();let gIdx=index" class="tab" [ngClass]="{'active':activeTab==g.uuid}" 
+	  (click)="activeTab=g.uuid" >
+	  <a  routerLink="/play-area/{{g.uuid}}">{{g.name}}</a>
+	  <span class="close" (click)="gameService.removeGame(g.uuid)">x</span>
+</ul>
+<router-outlet></router-outlet>
