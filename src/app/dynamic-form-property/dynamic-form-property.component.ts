@@ -5,7 +5,8 @@ import { PropertyBase }     from '../classes/property-base';
 
 @Component({
   selector: 'app-property',
-  templateUrl: './dynamic-form-property.component.html'
+  templateUrl: './dynamic-form-property.component.html',
+  styleUrls: ['./dynamic-form-property.component.css']
 })
 export class DynamicFormPropertyComponent {
   @Input() property: PropertyBase<any>;

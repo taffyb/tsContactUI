@@ -7,11 +7,13 @@ import { PropertyControlService }    from '../property-control.service';
 @Component({
   selector: 'app-dynamic-form',
   templateUrl: './dynamic-form.component.html',
+  styleUrls: ['./dynamic-form.component.css'],
   providers: [ PropertyControlService ]
 })
 export class DynamicFormComponent implements OnInit {
 
   @Input()properties: PropertyBase<any>[] = [];
+  @Input()title: string="Dynamic Form";
   form: FormGroup;
   payLoad = '';
 

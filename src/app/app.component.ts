@@ -6,8 +6,8 @@ import { PropertyService } from './property.service';
   selector: 'app-root',
   template: ` 
     <div>
-      <h2>Job Application for Heroes</h2>
-      <app-dynamic-form [properties]="properties"></app-dynamic-form>
+      This is under the form background
+      <app-dynamic-form [properties]="properties" [title]="'Person'"></app-dynamic-form>
     </div>
   `,
   providers:  [PropertyService]
@@ -17,6 +17,5 @@ export class AppComponent {
 
   constructor(service: PropertyService) {
     this.properties = service.getProperties();
-    console.log(`AppComponent.constructor properties=${JSON.stringify(this.properties)}`);
   }
 }

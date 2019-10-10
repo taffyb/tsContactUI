@@ -1,15 +1,23 @@
 <div [formGroup]="form">
-  <label [attr.for]="property.key">{{property.label}}</label>
+  <label [attr.for]="property.key">{{property.label}}<span class="required" *ngIf="property.required">*</span></label>
 
   <div [ngSwitch]="property.controlType">
 
     <input *ngSwitchCase="'textbox'" [formControlName]="property.key"
             [id]="property.key" [type]="property.type">
+            
+    <input *ngSwitchCase="'checkbox'" [formControlName]="property.key"
+            [id]="property.key" [type]="'checkbox'">
 
     <select [id]="property.key" *ngSwitchCase="'dropdown'" [formControlName]="property.key">
       <option *ngFor="let opt of property.options" [value]="opt.key">{{opt.value}}</option>
     </select>
-
+    
+    <textarea  *ngSwitchCase="'textarea'" [formControlName]="property.key"
+            [id]="property.key"  [rows]="property.options.rows" [cols]="property.options.cols">
+	</textarea>
+    
+    <hr  *ngSwitchCase="'hr'" >
   </div> 
 
   <div class="errorMessage" *ngIf="!isValid">{{property.label}} is required</div>
