@@ -1,24 +1,24 @@
 import { Injectable }       from '@angular/core';
 
-import { DropdownProperty } from './classes/property-dropdown';
-import { PropertyBase }     from './classes/property-base';
-import { TextboxProperty }  from './classes/property-textbox';
-import { CheckboxProperty }  from './classes/property-checkbox';
-import { TextareaProperty }  from './classes/property-textarea';
-import { HLineProperty }  from './classes/property-hr';
+import { DropdownField } from './classes/field-dropdown';
+import { FieldBase }     from './classes/field-base';
+import { TextboxField }  from './classes/field-textbox';
+import { CheckboxField }  from './classes/field-checkbox';
+import { TextareaField }  from './classes/field-textarea';
+import { HLineField }  from './classes/field-hr';
 
 import {ENTITY_DEFS} from './data/EntityDefs'
 
 @Injectable()
-export class PropertyService {
+export class FieldService {
 
-  // TODO: get from a remote source of property metadata
+  // TODO: get from a remote source of field metadata
   // TODO: make asynchronous
     
 
-  getProperties():PropertyBase<any>[] {
+  getFields():FieldBase<any>[] {
 
-    let properties: PropertyBase<any>[] = [];  
+    let fields: FieldBase<any>[] = [];  
     let entityDef=ENTITY_DEFS.entityDefs[2];
     let e={
             "Firstname": "John",
@@ -30,24 +30,26 @@ export class PropertyService {
     
     for(let key in entityDef.props){
         if(key!="uuid"){
-            properties.push(this.contactdb2PropertyType(entityDef.props[key][0],e));
+            fields.push(this.contactdb2PropertyType(entityDef.props[key][0],e));
         }        
     }
-    return properties.sort((a, b) => a.order - b.order);
+    return fields.sort((a, b) => a.order - b.order);
   }
   
-  contactdb2PropertyType(p,e):PropertyBase<any>{
-      let rtn:PropertyBase<any>;
+  contactdb2PropertyType(p,e):FieldBase<any>{
+      let rtn:FieldBase<any>;
       switch(p.type){
           case "string":
-              rtn=new TextboxProperty({key:p.name,
+              rtn=new TextboxField({
+                   key:p.name,
                    value:e[p.name],
                    label:p.label || p.name,
                    order:p.order,
                    required:!!p.required});
               break;
           case "date":
-              rtn=new TextboxProperty({key:p.name,
+              rtn=new TextboxField({
+                  key:p.name,
                   value:e[p.name],
                   label:p.label || p.name,
                   order:p.order,
@@ -55,7 +57,8 @@ export class PropertyService {
                   required:!!p.required});
               break;
           case "email":
-              rtn=new TextboxProperty({key:p.name,
+              rtn=new TextboxField({
+                  key:p.name,
                   value:e[p.name],
                   label:p.label || p.name,
                   order:p.order,
@@ -63,7 +66,8 @@ export class PropertyService {
                   required:!!p.required});
               break;
           case "memo":
-              rtn=new TextareaProperty({key:p.name,
+              rtn=new TextareaField({
+                  key:p.name,
                   value:e[p.name],
                   label:p.label || p.name,
                   order:p.order,
@@ -71,7 +75,8 @@ export class PropertyService {
                   required:!!p.required});
               break;
           case "true-false":
-              rtn=new CheckboxProperty({key:p.name,
+              rtn=new CheckboxField({
+                  key:p.name,
                   value:e[p.name],
                   label:p.label || p.name,
                   order:p.order,
@@ -79,7 +84,7 @@ export class PropertyService {
               break;          
       }
 
-    console.log(`property :${JSON.stringify(rtn)}`);
+    console.log(`Field :${JSON.stringify(rtn)}`);
     
       return rtn;
   }
@@ -87,9 +92,9 @@ export class PropertyService {
     
 //  getProperties() {
 //
-//    let properties: PropertyBase<any>[] = [
+//    let fields: FieldBase<any>[] = [
 //
-//      new DropdownProperty({
+//      new DropdownField({
 //        key: 'brave',
 //        label: 'Bravery Rating',
 //        options: [
@@ -101,7 +106,7 @@ export class PropertyService {
 //        order: 3
 //      }),
 //
-//      new TextboxProperty({
+//      new TextboxField({
 //        key: 'firstName',
 //        label: 'First name',
 //        value: 'Bombasto',
@@ -109,31 +114,31 @@ export class PropertyService {
 //        order: 1
 //      }),
 //
-//      new TextboxProperty({
+//      new TextboxField({
 //        key: 'emailAddress',
 //        label: 'DOB',
 //        type: 'date',
 //        order: 2
 //      }),
 //
-//      new TextareaProperty({
+//      new TextareaField({
 //        key: 'notes',
 //        label: 'Notes',
 //        type: 'textarea',
 //        order: 5
 //      }),
 //
-//      new CheckboxProperty({
+//      new CheckboxField({
 //        key: 'isContractor',
 //        label: 'Is A Contractor',
 //        order: 6
 //      }),
 //
-//      new HLineProperty({
+//      new HLineField({
 //        order: 4
 //      })
 //    ];
 //
-//    return properties.sort((a, b) => a.order - b.order);
+//    return fields.sort((a, b) => a.order - b.order);
 //  }
 }

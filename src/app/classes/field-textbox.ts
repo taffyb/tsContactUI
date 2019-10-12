@@ -1,6 +1,6 @@
-import { PropertyBase } from './property-base';
+import { FieldBase } from './field-base';
 
-export class TextboxProperty extends PropertyBase<string> {
+export class TextboxField extends FieldBase<string> {
   controlType = 'textbox';
   type: string;
 

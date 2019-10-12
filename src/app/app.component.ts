@@ -1,21 +1,21 @@
 import { Component }       from '@angular/core';
 
-import { PropertyService } from './property.service';
+import { FieldService } from './field.service';
 
 @Component({
   selector: 'app-root',
   template: ` 
     <div>
       This is under the form background
-      <app-dynamic-form [properties]="properties" [title]="'Person'"></app-dynamic-form>
+      <app-dynamic-form [fields]="fields" [title]="'Person'"></app-dynamic-form>
     </div>
   `,
-  providers:  [PropertyService]
+  providers:  [FieldService]
 })
 export class AppComponent {
-  properties: any[];
+  fields: any[];
 
-  constructor(service: PropertyService) {
-    this.properties = service.getProperties();
+  constructor(service: FieldService) {
+    this.fields = service.getFields();
   }
 }

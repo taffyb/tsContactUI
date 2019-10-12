@@ -1,0 +1,24 @@
+<div [formGroup]="form">
+  <label [attr.for]="field.key">{{field.label}}<span class="required" *ngIf="field.required">*</span></label>
+
+  <div [ngSwitch]="field.controlType">
+
+    <input *ngSwitchCase="'textbox'" [formControlName]="field.key"
+            [id]="field.key" [type]="field.type">
+            
+    <input *ngSwitchCase="'checkbox'" [formControlName]="field.key"
+            [id]="field.key" [type]="'checkbox'">
+
+    <select [id]="field.key" *ngSwitchCase="'dropdown'" [formControlName]="field.key">
+      <option *ngFor="let opt of field.options" [value]="opt.key">{{opt.value}}</option>
+    </select>
+    
+    <textarea  *ngSwitchCase="'textarea'" [formControlName]="field.key"
+            [id]="field.key"  [rows]="field.options.rows" [cols]="field.options.cols">
+	</textarea>
+    
+    <hr  *ngSwitchCase="'hr'" >
+  </div> 
+
+  <div class="errorMessage" *ngIf="!isValid">{{field.label}} is required</div>
+</div>

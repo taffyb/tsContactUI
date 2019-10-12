@@ -1,4 +1,4 @@
-export class PropertyBase<T> {
+export class FieldBase<T> {
   value: T;
   key: string;
   label: string;

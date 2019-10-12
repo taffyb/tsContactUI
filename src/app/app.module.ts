@@ -8,12 +8,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
-import { DynamicFormPropertyComponent } from './dynamic-form-property/dynamic-form-property.component';
+import { DynamicFormFieldComponent } from './dynamic-form-field/dynamic-form-field.component';
 @NgModule({
   declarations: [
     AppComponent,
     DynamicFormComponent,
-    DynamicFormPropertyComponent,
+    DynamicFormFieldComponent,
   ],
   imports: [
     HttpClientModule,

@@ -4,23 +4,22 @@ import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 
 import {IEntityDef} from './classes/IEntityDef';
+import {IEntity} from './classes/IEntity';
+
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-    endpoint:string = 'http://localhost:3000/api/v1/';
+    endpoint:string = 'http://localhost:4001/api/';
     httpOptions:any = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
       })
     };
+    entityDefs:IEntityDef[];
 
     constructor(private http: HttpClient) {
     }
-//    private extractData(res: Response) {
-//        let body = res;
-//        return body || { };
-//      }
 
     private handleError<T> (operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
@@ -35,9 +34,18 @@ export class DataService {
           return of(result as T);
         };
       }
-    getEntityDef(uuid): Observable<IEntityDef> {
-        return this.http.get<IEntityDef>(this.endpoint + 'entity-defs/' + uuid);
-      }
+    
+    
+    getEntityDefs(): Observable<IEntityDef[]> {
+        return this.http.get<IEntityDef[]>(this.endpoint + 'entity-defs').pipe(
+                catchError(this.handleError<any>('getEntityDefs'))
+        );
+    }
+    
+    getEntity(uuid): Observable<IEntity> {
+        return this.http.get<IEntity>(this.endpoint + 'entities/' + uuid);
+    }
+    
     addProduct (entityDef:IEntityDef): Observable<IEntityDef> {
         console.log(entityDef);
         return this.http.post<IEntityDef>(this.endpoint + 'products', JSON.stringify(entityDef), this.httpOptions).pipe(

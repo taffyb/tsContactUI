@@ -1,6 +1,6 @@
-import { PropertyBase } from './property-base';
+import { FieldBase } from './field-base';
 
-export class DropdownProperty extends PropertyBase<string> {
+export class DropdownField extends FieldBase<string> {
   controlType = 'dropdown';
   options: {key: string, value: string}[] = [];
 

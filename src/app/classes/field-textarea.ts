@@ -1,6 +1,6 @@
-import { PropertyBase } from './property-base';
+import { FieldBase } from './field-base';
 
-export class TextareaProperty extends PropertyBase<string> {
+export class TextareaField extends FieldBase<string> {
   controlType = 'textarea';
   options: {rows: string, cols: string};
 

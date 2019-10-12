@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PropertyService } from './property.service';
+import { FieldControlService } from './field-control.service';
 
-describe('PropertyService', () => {
+describe('FieldControlService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: PropertyService = TestBed.get(PropertyService);
+    const service: FieldControlService = TestBed.get(FieldControlService);
     expect(service).toBeTruthy();
   });
 });

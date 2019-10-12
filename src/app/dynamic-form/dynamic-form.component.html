@@ -3,13 +3,15 @@
 	  <h2 class="title">{{title}}</h2>
 	  <form class="form-vertical" (ngSubmit)="onSubmit()" [formGroup]="form">
 			
-	    <div *ngFor="let property of properties" class="form-row">
-	      <app-property [property]="property" [form]="form"></app-property>
+	    <div *ngFor="let field of fields" class="form-row">
+	      <app-field [field]="field" [form]="form"></app-field>
 	    </div>
 	
 		<p>
 	    <div class="form-row">
-	      <button type="submit" [disabled]="!form.valid">Save</button>
+	      <button type="submit" [disabled]="!form.valid">Save</button> &nbsp;
+	      <button type="button " (click)="onGetEntityDefs()">Get EntityDefs</button> &nbsp;
+	      <button type="button " (click)="onGetEntity()">Get Entity</button>
 	    </div>
 	  </form>
 	

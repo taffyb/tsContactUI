@@ -1,5 +1,7 @@
+import {IProperty} from './IProperty'
+
 export interface IEntityDef{
     name:string;
     uuid:string;
-    props:object;
+    props:IProperty[];
 }
