@@ -7,7 +7,11 @@ import { CheckboxField }  from './classes/field-checkbox';
 import { TextareaField }  from './classes/field-textarea';
 import { HLineField }  from './classes/field-hr';
 
-import {ENTITY_DEFS} from './data/EntityDefs'
+import {ENTITY_DEFS} from './data/EntityDefs';
+
+import {IEntityDef} from './classes/IEntityDef';
+import {IEntity} from './classes/IEntity';
+import {IProperty} from './classes/IProperty';
 
 @Injectable()
 export class FieldService {
@@ -16,33 +20,40 @@ export class FieldService {
   // TODO: make asynchronous
     
 
-  getFields():FieldBase<any>[] {
+  getFields(entityDef:IEntityDef,entity:IEntity):FieldBase<any>[] {
 
     let fields: FieldBase<any>[] = [];  
-    let entityDef=ENTITY_DEFS.entityDefs[2];
-    let e={
-            "Firstname": "John",
-            "uuid": "4a746383-2b88-4614-97c0-08964e40b919",
-            "Surname": "Smith",
-            "Notes": "this is some \n multi\nlined\ntext",
-            "wemail": "smith.john@domain.co.uk"
-        };
-    
-    for(let key in entityDef.props){
-        if(key!="uuid"){
-            fields.push(this.contactdb2PropertyType(entityDef.props[key][0],e));
-        }        
+    let defProps={};
+
+    entityDef.props.forEach(prop=>{
+        defProps[prop.name]={name:prop.name,type:prop.type,label:prop.label,order:prop.order,required:prop.required};
+    });
+   
+    for(let key in defProps){
+        let field:FieldBase<any> = this.contactdb2PropertyType(defProps[key],entity.props[key]);
+//        console.log(`getFields field: ${JSON.stringify(field)}`);
+        fields.push(field);
+       delete entity.props[key];
     }
+    for(let key in entity.props){
+       if(key !=='uuid'){
+           let field:FieldBase<any> = this.contactdb2PropertyType(defProps[key],entity.props[key]);
+//           console.log(`getFields field: ${JSON.stringify(field)}`);
+           fields.push(field);
+       }
+    }
+    
     return fields.sort((a, b) => a.order - b.order);
   }
   
-  contactdb2PropertyType(p,e):FieldBase<any>{
+  contactdb2PropertyType(p,val):FieldBase<any>{
       let rtn:FieldBase<any>;
-      switch(p.type){
+      if(p){
+          switch(p.type){
           case "string":
               rtn=new TextboxField({
                    key:p.name,
-                   value:e[p.name],
+                   value:val,
                    label:p.label || p.name,
                    order:p.order,
                    required:!!p.required});
@@ -50,7 +61,7 @@ export class FieldService {
           case "date":
               rtn=new TextboxField({
                   key:p.name,
-                  value:e[p.name],
+                  value:val,
                   label:p.label || p.name,
                   order:p.order,
                   type:"date",
@@ -59,7 +70,7 @@ export class FieldService {
           case "email":
               rtn=new TextboxField({
                   key:p.name,
-                  value:e[p.name],
+                  value:val,
                   label:p.label || p.name,
                   order:p.order,
                   type:"email",
@@ -68,7 +79,7 @@ export class FieldService {
           case "memo":
               rtn=new TextareaField({
                   key:p.name,
-                  value:e[p.name],
+                  value:val,
                   label:p.label || p.name,
                   order:p.order,
                   type:"date",
@@ -77,14 +88,20 @@ export class FieldService {
           case "true-false":
               rtn=new CheckboxField({
                   key:p.name,
-                  value:e[p.name],
+                  value:val,
                   label:p.label || p.name,
                   order:p.order,
                   required:!!p.required});
-              break;          
+              break; 
+          }
+      }else{
+          rtn=new TextboxField({
+              key:p.name,
+              value:val,
+              label:p.label || p.name,
+              order:p.order,
+              required:!!p.required});
       }
-
-    console.log(`Field :${JSON.stringify(rtn)}`);
     
       return rtn;
   }

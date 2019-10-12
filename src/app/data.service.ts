@@ -36,10 +36,21 @@ export class DataService {
       }
     
     
-    getEntityDefs(): Observable<IEntityDef[]> {
-        return this.http.get<IEntityDef[]>(this.endpoint + 'entity-defs').pipe(
-                catchError(this.handleError<any>('getEntityDefs'))
-        );
+    private getEDefs(): Observable<IEntityDef[]> {
+        return this.http.get<IEntityDef[]>(this.endpoint + 'entity-defs');
+    }
+    
+    async getEntityDef(type:string){
+        const entityDefs = await this.getEDefs().toPromise();
+        let entityDef:IEntityDef;     
+//        console.log(`getEntityDef.entityDefs : ${JSON.stringify(entityDefs) } ${entityDefs.length }`);
+        for(let i=0;i<entityDefs.length;i++){
+//            console.log(`getEntityDef type: ${type} entityDefs[i].name:${entityDefs[i].name}`);
+            if(entityDefs[i].name==type){
+                entityDef=entityDefs[i];
+            }
+        }
+        return entityDef;
     }
     
     getEntity(uuid): Observable<IEntity> {

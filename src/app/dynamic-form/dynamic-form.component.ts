@@ -33,16 +33,6 @@ export class DynamicFormComponent implements OnInit {
     this.payLoad = JSON.stringify(this.form.value);
   }
   
-  onGetEntityDefs(){ 
-      console.log(`getEntityDefs()`);
-      let entityDefs:IEntityDef[];
-      this.ds.getEntityDefs().subscribe((data: IEntityDef[]) => {
-          console.log(`EntityDef Data: ${JSON.stringify(data)}`);
-          entityDefs = data;
-        }); 
-      
-  }
-  
   onGetEntity(){ 
       console.log(`getEntity()`);
       let entity:IEntity;
