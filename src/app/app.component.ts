@@ -9,29 +9,32 @@ import {IEntity} from './classes/IEntity';
   selector: 'app-root',
   template: ` 
     <div>
-      This is under the form background
-      <app-dynamic-form *ngIf="fields" [fields]="fields" [title]="'Person'"></app-dynamic-form>
-      <button *ngIf="!fields" (click)="showForm()">Show Form</button>
+      <input type="text" id="euuid" [(ngModel)]="euuid">
+      <select *ngIf="!euuid" id="entityType" [(ngModel)]="entityType">
+          <option>Person</option>
+          <option>Event</option>
+          <option>Organisation</option>
+      </select>
+      <entity-form *ngIf="formVisible" [euuid]="euuid" [entityType]="entityType" (onClose)="hideForm()"></entity-form>
+      <button *ngIf="!formVisible" (click)="showForm()">Show Form</button>
     </div>
   `,
   providers:  [FieldService]
 })
 export class AppComponent {
   fields: any[];
+  formVisible:boolean=false;
+  euuid:string="4a746383-2b88-4614-97c0-08964e40b919";
+  entityType:string=""
 
   constructor(private fs: FieldService,private  ds:DataService,
           public zone: NgZone) {
    
+  }    
+  showForm(){
+      this.formVisible=true;
   }
-    
-  async showForm(){
-      const euuid:string = "4a746383-2b88-4614-97c0-08964e40b919";
-      const entity:IEntity = await this.ds.getEntity(euuid).toPromise();
-//      console.log(`showForm.entity: ${JSON.stringify(entity)}`);
-      const entityDef = await this.ds.getEntityDef(entity.type);
-//      console.log(`showForm.entityDef: ${JSON.stringify(entityDef)}`);
-//      console.log(`AppComponent.constructor.entity ${JSON.stringify(entity)}`);
-      
-      this.zone.run(() => this.fields = this.fs.getFields(entityDef,entity));
+  hideForm(){
+      this.formVisible=false; 
   }
 }

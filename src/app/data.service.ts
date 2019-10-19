@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, EMPTY } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 
 import {IEntityDef} from './classes/IEntityDef';
@@ -22,6 +22,7 @@ export class DataService {
     }
 
     private handleError<T> (operation = 'operation', result?: T) {
+        console.log(`httpClientError: ${JSON.stringify(result)}`);
         return (error: any): Observable<T> => {
 
           // TODO: send the error to remote logging infrastructure
@@ -57,22 +58,48 @@ export class DataService {
         return this.http.get<IEntity>(this.endpoint + 'entities/' + uuid);
     }
     
-    addProduct (entityDef:IEntityDef): Observable<IEntityDef> {
-        console.log(entityDef);
-        return this.http.post<IEntityDef>(this.endpoint + 'products', JSON.stringify(entityDef), this.httpOptions).pipe(
-          tap((product) => console.log(`added product w/ id=${entityDef.uuid}`)),
-          catchError(this.handleError<any>('addProduct'))
-        );
+    addEntity (entity:IEntity): Observable<any> {
+        console.log(`addEntity.entity : ${JSON.stringify(entity) } \n ${this.endpoint + 'entities'}`);
+        let observable = this.http.post(this.endpoint + 'entities', JSON.stringify(entity), this.httpOptions).pipe(
+                tap((product) => console.log(`added entity w/ id=${entity.uuid}`)),
+                catchError(this.handleError<any>('addEntity'))
+              );
+        console.log(`addEntity.entity return`);
+        return observable;
       }
-    updateProduct (id, product): Observable<any> {
-        return this.http.put(this.endpoint + 'products/' + id, JSON.stringify(product), this.httpOptions).pipe(
-          tap(_ => console.log(`updated product id=${id}`)),
-          catchError(this.handleError<any>('updateProduct'))
-        );
+    updateEntity (entity:IEntity): Observable<any> {
+        console.log(`updateEntity: endpoint=${this.endpoint + 'entities/' + entity.uuid} \nentity:${JSON.stringify(entity)}`);
+//        return this.http.put(this.endpoint + 'entities/' + entity.uuid, JSON.stringify(entity), this.httpOptions).pipe(
+//          tap(_ => console.log(`updated entity id=${entity.uuid}`)),
+//          catchError(this.handleError<any>('updateEntity'))
+//        );
+        return this.http
+            .put(this.endpoint + 'entities/' + entity.uuid, JSON.stringify(entity), this.httpOptions)
+            .pipe(
+                    catchError((error: HttpErrorResponse) => {
+                      if (error.error instanceof Error) {
+                        // A client-side or network error occurred. Handle it accordingly.
+                        console.log('An error occurred:', error.error.message);
+                      } else {
+                        // The backend returned an unsuccessful response code.
+                        // The response body may contain clues as to what went wrong,
+                        console.log(`Backend returned code ${error.status}, body was: ${error.error}`);
+                      }
+
+                      // If you want to return a new response:
+                      //return of(new HttpResponse({body: [{name: "Default value..."}]}));
+
+                      // If you want to return the error on the upper level:
+                      //return throwError(error);
+
+                      // or just return nothing:
+                      return EMPTY;
+                    })
+                  );
       }
-    deleteProduct (id): Observable<any> {
-        return this.http.delete<any>(this.endpoint + 'products/' + id, this.httpOptions).pipe(
-          tap(_ => console.log(`deleted product id=${id}`)),
+    deleteEntity (euuid): Observable<any> {
+        return this.http.delete<any>(this.endpoint + 'entities/' + euuid, this.httpOptions).pipe(
+          tap(_ => console.log(`deleted entity.uuid=${euuid}`)),
           catchError(this.handleError<any>('deleteProduct'))
         );
       }

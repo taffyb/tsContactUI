@@ -1,6 +1,6 @@
 <div class="background">
 	<div class="form" >
-	  <h2 class="title">{{title}}</h2>
+	  <h2 class="title">{{title}}<span class="close" (click)="onCancel()">X</span></h2>
 	  <form class="form-vertical" (ngSubmit)="onSubmit()" [formGroup]="form">
 			
 	    <div *ngFor="let field of fields" class="form-row">
@@ -9,7 +9,8 @@
 	
 		<p>
 	    <div class="form-row">
-	      <button type="submit" [disabled]="!form.valid">Save</button> &nbsp;
+	      <button type="submit" [disabled]="!form.valid || !formChanged">Save</button> &nbsp;
+	      <button type="button" (click)="onCancel()">Cancel</button> &nbsp;
 	    </div>
 	  </form>
 	

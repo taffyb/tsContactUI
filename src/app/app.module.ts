@@ -7,12 +7,13 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
+import { EntityFormComponent } from './entity-form/entity-form.component';
 import { DynamicFormFieldComponent } from './dynamic-form-field/dynamic-form-field.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    DynamicFormComponent,
+    EntityFormComponent,
     DynamicFormFieldComponent,
   ],
   imports: [
@@ -26,4 +27,5 @@ import { DynamicFormFieldComponent } from './dynamic-form-field/dynamic-form-fie
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

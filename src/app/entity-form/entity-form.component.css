@@ -23,11 +23,18 @@ html, body{
 	background:white;
 	opacity:10%;
 	position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 	border: 1px black solid;
 }
 .form-row{
 	padding: 3px;
+}
+.close{
+	float:right;
+	color:red;
+	font-weight:bold;
+	text-align:right;
+	cursor:pointer;
 }
