@@ -10,7 +10,8 @@ html, body{
 
 .background{
 	background:black;
-	opacity:2%;
+  	opacity: 0.2;
+  	filter: alpha(opacity=20); /* For IE8 and earlier */
 	position: absolute;
 	width:100%;
 	height:100%;
@@ -21,7 +22,7 @@ html, body{
 
 .form{
 	background:white;
-	opacity:10%;
+	opacity:0.9;
 	position: absolute;
     left: 50%;
     top: 50%;
