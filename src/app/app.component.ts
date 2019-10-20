@@ -1,4 +1,4 @@
-import { Component , NgZone}       from '@angular/core';
+import { Component , NgZone, OnInit}       from '@angular/core';
 
 import { FieldService } from './field.service';
 import { DataService } from './data.service';
@@ -7,30 +7,31 @@ import {IEntity} from './classes/IEntity';
 
 @Component({
   selector: 'app-root',
-  template: ` 
-    <div>
-      <input type="text" id="euuid" [(ngModel)]="euuid">
-      <select *ngIf="!euuid" id="entityType" [(ngModel)]="entityType">
-          <option>Person</option>
-          <option>Event</option>
-          <option>Organisation</option>
-      </select>
-      <entity-form *ngIf="formVisible" [euuid]="euuid" [entityType]="entityType" (onClose)="hideForm()"></entity-form>
-      <button *ngIf="!formVisible" (click)="showForm()">Show Form</button>
-    </div>
-  `,
+  templateUrl: `app.component.html`,
   providers:  [FieldService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   fields: any[];
   formVisible:boolean=false;
-  euuid:string="4a746383-2b88-4614-97c0-08964e40b919";
-  entityType:string=""
+  euuid:string="";
+  entityType:string="";
+  entities:IEntity[]=[];
+  entityDefs:IEntityDef[];
 
   constructor(private fs: FieldService,private  ds:DataService,
           public zone: NgZone) {
-   
+      ds.getEntityDefs()
+          .then(data => {
+              this.entityDefs = data;
+          });
   }    
+  ngOnInit() {
+      this.getEntities();
+    }
+  async getEntities() {
+      this.entities = await this.ds.getEntityList();
+      console.log(`getEntities: ${JSON.stringify(this.entities)}`);
+  }
   showForm(){
       this.formVisible=true;
   }

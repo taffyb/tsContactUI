@@ -1,6 +1,0 @@
-<!--The content below is only a placeholder and can be replaced.-->
-
-<ul class="main-menu">
-	<li class="tab" ><a routerLink="/entity-form">Entity Form</a></li>
-</ul>
-<router-outlet></router-outlet>

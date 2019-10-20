@@ -42,18 +42,18 @@ export class EntityFormComponent implements OnInit {
         entity["uuid"]=this.euuid;
         entity["type"]=this.title;
         response = await this.ds.updateEntity(entity).toPromise();
-        console.log(`onSubmit-update: ${JSON.stringify(entity)}`);
+//        console.log(`onSubmit-update: ${JSON.stringify(entity)}`);
     }else{
         entity["type"]=this.entityType;
         response = await this.ds.addEntity(entity).toPromise();
-        console.log(`onSubmit-add: ${JSON.stringify(entity)}`);
+//        console.log(`onSubmit-add: ${JSON.stringify(entity)}`);
     }
-    this.payLoad = JSON.stringify(this.form.value);
+    this.formChanged = false;
   }
  
   onCancel(){
       this.onClose.emit(true);
-      console.log(`form cancel`);
+//      console.log(`form cancel`);
   }
   
   async loadForm(){
@@ -62,6 +62,7 @@ export class EntityFormComponent implements OnInit {
         this.entity = await this.ds.getEntity(this.euuid).toPromise();
 //    console.log(`loadForm.entity: ${JSON.stringify(this.entity)}`);
         entityDef = await this.ds.getEntityDef(this.entity.type);
+        this.entityType=this.entity.type;
         this.title=this.entity.type;
         this.fields = this.fs.getFields(entityDef,this.entity);
       }else{
@@ -76,7 +77,7 @@ export class EntityFormComponent implements OnInit {
 //      console.log(`loadForm.this.fields: ${JSON.stringify(this.fields)}`);
       this.form =this.pcs.toFormGroup(this.fields);
       this.form.valueChanges.subscribe(form => {
-          console.log(`Form Changed`);
+//          console.log(`Form Changed`);
           this.formChanged=true;
       });    
   }

@@ -9,12 +9,14 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { EntityFormComponent } from './entity-form/entity-form.component';
 import { DynamicFormFieldComponent } from './dynamic-form-field/dynamic-form-field.component';
+import { EntityListComponent } from './entity-list/entity-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EntityFormComponent,
     DynamicFormFieldComponent,
+    EntityListComponent,
   ],
   imports: [
     HttpClientModule,
