@@ -1,18 +1,29 @@
 .entity-list{
 	padding-left:5px;
 	padding-top:10px;
+	width:25%;
 }
 .entity-item{
 	padding-bottom:5px;
 }
+.entity-item:hover{
+	cursor:pointer;
+	background:rgb(161, 238, 240);
+}
 .link{
 	text-decoration: underline;
-	color: blue;
-}
-.link:hover{
-	cursor:pointer;
+	/*color: blue;*/
 }
 .icon-small{
 	width:15px;
 	heigh:15px;
+	padding-right:5px;
+}
+.entity-item .delete{
+	float:right;
+	font-weight: bold;
+	visibility: hidden;
+}
+.entity-item:hover .delete{
+	visibility: visible;
 }

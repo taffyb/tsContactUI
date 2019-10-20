@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   fields: any[];
   formVisible:boolean=false;
   euuid:string="";
-  entityType:string="";
+  entityType:string="Person";
   entities:IEntity[]=[];
   entityDefs:IEntityDef[];
 
@@ -27,15 +27,26 @@ export class AppComponent implements OnInit {
   }    
   ngOnInit() {
       this.getEntities();
-    }
+  }
   async getEntities() {
       this.entities = await this.ds.getEntityList();
-      console.log(`getEntities: ${JSON.stringify(this.entities)}`);
   }
   showForm(){
       this.formVisible=true;
   }
-  hideForm(){
+  hideForm(status){
+      console.log(`${status}`);
+      if(status===true){
+          this.refreshEntityList();
+      }
       this.formVisible=false; 
+  }
+  async delete(uuid:string){
+      let response = await this.ds.deleteEntity(uuid).toPromise();
+      this.refreshEntityList();
+  }
+  refreshEntityList(){
+      this.entities=[];
+      this.zone.run(async () => this.entities = await this.ds.getEntityList(true));
   }
 }

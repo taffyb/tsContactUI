@@ -81,9 +81,9 @@ export class DataService {
         });
     }
 
-    getEntityList():Promise<IEntity[]>{
+    getEntityList(forceRefresh:boolean=false):Promise<IEntity[]>{
         return new Promise<IEntity[]>(async (resolve,reject)=>{
-            if(!this.entityList){
+            if((!this.entityList || this.entityList===null) || forceRefresh){
                 this.entityList = await this.getEntities().toPromise();
             }
             resolve(this.entityList);
@@ -109,10 +109,11 @@ export class DataService {
               );
       }
     deleteEntity (euuid): Observable<any> {
+        this.entityList=null;
         return this.http
             .delete<any>(this.endpoint + 'entities/' + euuid, this.httpOptions).pipe(
               tap(_ => console.log(`deleted entity.uuid=${euuid}`)),
               catchError(this.handleError<any>('deleteEntity'))
-            );
+            );        
       }
 }

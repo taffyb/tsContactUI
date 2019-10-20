@@ -8,6 +8,7 @@ export class FieldControlService {
   constructor() { }
 
   toFormGroup(fields: FieldBase<any>[] ) {
+    console.log(`toFormGroup.fields:${fields}`);
     let group: any = {};
 
     fields.forEach(field => {

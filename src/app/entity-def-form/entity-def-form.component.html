@@ -1,7 +1,7 @@
 <div class="background" (click)="onCancel()"></div>
 <div class="form" >
   <h2 class="title">
-  	<img class="icon-small" src="/assets/{{entityType}}.svg"/>
+  	<img class="icon-small" src={{getIcon()}}/>
   	{{title}}
   	<span class="close" (click)="onCancel()">X</span></h2>
   <form class="form-vertical" (ngSubmit)="onSubmit()" [formGroup]="form">

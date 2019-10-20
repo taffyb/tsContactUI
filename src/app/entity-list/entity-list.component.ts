@@ -10,6 +10,7 @@ import {IEntity} from '../classes/IEntity';
 export class EntityListComponent implements OnInit {
   @Input()entities:IEntity[]=[];
   @Output()onSelect:EventEmitter<string> = new EventEmitter<string>();
+  @Output()onDelete:EventEmitter<string> = new EventEmitter<string>();
   
   constructor() { }
 
@@ -19,5 +20,8 @@ export class EntityListComponent implements OnInit {
 
   selected(uuid:string){
       this.onSelect.emit(uuid);
+  }
+  delete(uuid:string){
+      this.onDelete.emit(uuid);
   }
 }

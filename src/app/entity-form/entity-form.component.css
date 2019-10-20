@@ -6,11 +6,40 @@ html, body{
 	background:gray;
 	color:white;
 	margin-top:0;
+	margin-bottom:0px;
+}
+.tabbar{
+	border-bottom:1px solid black;
+	padding:0px;
+	margin:0px;
+	height:39px;
+}
+/* Style the buttons that are used to open the tab content */
+.tab{
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 10px 16px;
+  transition: 0.3s;
+  list-style-type:none;
+}
+
+/* Change background color of buttons on hover */
+.tab:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab.active {
+  background-color: #ccc;
 }
 .icon-small{
 	width:20px;
 	height:20px;
 	padding-left:5px;
+	padding-right:5px;
 }
 
 .background{
@@ -24,7 +53,13 @@ html, body{
 	padding:0;
 	margin:0;
 }
-
+.group{
+  	display:inline;
+	visibility:hidden;
+}
+.group.active{
+	visibility:visible;
+}
 .form{
 	background:white;
 	position: absolute;
@@ -32,6 +67,8 @@ html, body{
     top: 50%;
     transform: translate(-50%, -50%);
 	border: 1px black solid;
+	padding:0px;
+	margin:0px;
 }
 .form-row{
 	padding: 3px;

@@ -26,9 +26,11 @@ export class EntityFormComponent implements OnInit {
   form: FormGroup;
   formChanged:boolean=false;
   payLoad = '';
+  newEntitySaved:boolean=false;
+  activeTab:string="Details";
   
 
-  constructor(private pcs: FieldControlService,private fs: FieldService,private ds: DataService) { 
+  constructor(private fcs: FieldControlService,private fs: FieldService,private ds: DataService) { 
   }
 
   ngOnInit() {
@@ -42,42 +44,39 @@ export class EntityFormComponent implements OnInit {
         entity["uuid"]=this.euuid;
         entity["type"]=this.title;
         response = await this.ds.updateEntity(entity).toPromise();
-//        console.log(`onSubmit-update: ${JSON.stringify(entity)}`);
     }else{
         entity["type"]=this.entityType;
         response = await this.ds.addEntity(entity).toPromise();
-//        console.log(`onSubmit-add: ${JSON.stringify(entity)}`);
+        this.newEntitySaved=true;
     }
     this.formChanged = false;
   }
  
   onCancel(){
-      this.onClose.emit(true);
-//      console.log(`form cancel`);
+      this.onClose.emit(this.newEntitySaved);
   }
-  
+  getIcon():string{
+      let iconPath:string=this.entity.icon || `/assets/${this.entityType}'.svg`;
+      return iconPath;
+  }
   async loadForm(){
       let entityDef;
+//      console.log(`entity-form.load: euuid[${this.euuid}] type[${this.entityType}]`);
       if(this.euuid){
         this.entity = await this.ds.getEntity(this.euuid).toPromise();
-//    console.log(`loadForm.entity: ${JSON.stringify(this.entity)}`);
         entityDef = await this.ds.getEntityDef(this.entity.type);
         this.entityType=this.entity.type;
         this.title=this.entity.type;
         this.fields = this.fs.getFields(entityDef,this.entity);
       }else{
           this.entity=new BaseEntity();
-//          this.entity.type=this.entityType;
           entityDef = await this.ds.getEntityDef(this.entityType);
           this.title=this.entityType ;
           this.fields = this.fs.getFields(entityDef,null);
       }
 
-//    console.log(`loadForm.entity: B4 set Fields`);
-//      console.log(`loadForm.this.fields: ${JSON.stringify(this.fields)}`);
-      this.form =this.pcs.toFormGroup(this.fields);
+      this.form =this.fcs.toFormGroup(this.fields);
       this.form.valueChanges.subscribe(form => {
-//          console.log(`Form Changed`);
           this.formChanged=true;
       });    
   }

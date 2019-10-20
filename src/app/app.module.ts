@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { EntityFormComponent } from './entity-form/entity-form.component';
 import { DynamicFormFieldComponent } from './dynamic-form-field/dynamic-form-field.component';
 import { EntityListComponent } from './entity-list/entity-list.component';
+import { EntityDefFormComponent } from './entity-def-form/entity-def-form.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { EntityListComponent } from './entity-list/entity-list.component';
     EntityFormComponent,
     DynamicFormFieldComponent,
     EntityListComponent,
+    EntityDefFormComponent,
   ],
   imports: [
     HttpClientModule,
