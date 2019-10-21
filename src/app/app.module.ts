@@ -11,6 +11,8 @@ import { EntityFormComponent } from './entity-form/entity-form.component';
 import { DynamicFormFieldComponent } from './dynamic-form-field/dynamic-form-field.component';
 import { EntityListComponent } from './entity-list/entity-list.component';
 import { EntityDefFormComponent } from './entity-def-form/entity-def-form.component';
+import { EntityDefListComponent } from './entity-def-list/entity-def-list.component';
+import { PropertyFormComponent } from './property-form/property-form.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { EntityDefFormComponent } from './entity-def-form/entity-def-form.compon
     DynamicFormFieldComponent,
     EntityListComponent,
     EntityDefFormComponent,
+    EntityDefListComponent,
+    PropertyFormComponent,
   ],
   imports: [
     HttpClientModule,

@@ -8,11 +8,9 @@ export class FieldControlService {
   constructor() { }
 
   toFormGroup(fields: FieldBase<any>[] ) {
-    console.log(`toFormGroup.fields:${fields}`);
     let group: any = {};
 
     fields.forEach(field => {
-//      console.log(`FieldControlService.toFormGroup.field:${field}`);
       group[field.key] = field.required ? new FormControl(field.value || '', Validators.required)
                                               : new FormControl(field.value || '');
     });

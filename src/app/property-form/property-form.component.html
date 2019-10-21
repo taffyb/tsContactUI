@@ -1,0 +1,17 @@
+<div class="background" (click)="close()"></div>
+<div class="form" >
+  <h2 class="title">
+  	Property Form
+  	<span class="close" (click)="close()">X</span>
+  </h2>
+  <form class="form-vertical" (ngSubmit)="onSubmit()" [formGroup]="form">
+    <div *ngFor="let field of fields"  class="form-row">
+      <app-field [field]="field" [form]="form"></app-field>
+    </div>
+	<p>
+    <div class="form-row">
+      <button type="submit" [disabled]="!form.valid || !formChanged">Save</button> &nbsp;
+      <button type="button" (click)="close()">Cancel</button> &nbsp;
+    </div>
+  </form>
+</div>

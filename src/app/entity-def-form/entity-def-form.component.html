@@ -1,17 +1,22 @@
-<div class="background" (click)="onCancel()"></div>
+<div class="background" (click)="hidePropertyForm()"></div>
+<property-form *ngIf="propertyFormVisible" [property]="properties[0]" (onSave)="saveProperty($event)" (onClose)="hidePropertyForm()"></property-form>
+<button type="button" (click)="showPropertyForm()">Show Property</button>
+
+<!-- 
 <div class="form" >
   <h2 class="title">
   	<img class="icon-small" src={{getIcon()}}/>
   	{{title}}
-  	<span class="close" (click)="onCancel()">X</span></h2>
+  	<span class="close" (click)="hidePropertyForm()">X</span></h2>
   <form class="form-vertical" (ngSubmit)="onSubmit()" [formGroup]="form">
     <div class="tabbar">
-		<div *ngFor="let tab of ['Details','Notes']" 
+		<div *ngFor="let tab of ['Details']" 
 			[ngClass]="{
 						 'tab':true,
 					     'active':activeTab==tab
 					   }"
 			(click)="activeTab=tab">{{tab}}</div>
+			<div class="tab" (click)="addGroup()">+</div>
 	</div>
     <div *ngFor="let field of fields"  class="form-row">
       <app-field [field]="field" [form]="form"></app-field>
@@ -19,7 +24,8 @@
 	<p>
     <div class="form-row">
       <button type="submit" [disabled]="!form.valid || !formChanged">Save</button> &nbsp;
-      <button type="button" (click)="onCancel()">Cancel</button> &nbsp;
+      <button type="button" (click)="hidePropertyForm()">Cancel</button>
     </div>
   </form>
 </div>
+ -->

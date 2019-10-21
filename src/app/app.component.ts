@@ -12,7 +12,8 @@ import {IEntity} from './classes/IEntity';
 })
 export class AppComponent implements OnInit {
   fields: any[];
-  formVisible:boolean=false;
+  isEntityFormVisible:boolean=false;
+  isEntityDefFormVisible:boolean=false;
   euuid:string="";
   entityType:string="Person";
   entities:IEntity[]=[];
@@ -31,15 +32,21 @@ export class AppComponent implements OnInit {
   async getEntities() {
       this.entities = await this.ds.getEntityList();
   }
-  showForm(){
-      this.formVisible=true;
+  showEntityForm(){
+      this.isEntityFormVisible=true;
   }
-  hideForm(status){
+  showEntityDefForm(){
+      this.isEntityDefFormVisible=true;
+  }
+  hideEntityForm(status){
       console.log(`${status}`);
       if(status===true){
           this.refreshEntityList();
       }
-      this.formVisible=false; 
+      this.isEntityFormVisible=false; 
+  }
+  hideEntityDefForm(){
+      this.isEntityDefFormVisible=false
   }
   async delete(uuid:string){
       let response = await this.ds.deleteEntity(uuid).toPromise();
