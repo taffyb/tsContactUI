@@ -5,6 +5,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 
 import {IEntityDef} from './classes/IEntityDef';
 import {IEntity} from './classes/IEntity';
+import {IPropertyGroup} from './classes/IPropertyGroup';
 
 @Injectable({
   providedIn: 'root'
@@ -63,24 +64,25 @@ export class DataService {
     }
     getEntityDefGroups(type:string):Promise<string[]>{
         return new Promise<string[]>(async (resolve,reject)=>{
-        let groups:string[]=[];
-
-        if(!this.entityDefs){
-            this.entityDefs = await this.getEDefs().toPromise();
-        }
-        let entityDef:IEntityDef;
-        for(let i=0;i<this.entityDefs.length;i++){
-            if(this.entityDefs[i].name==type){
-                entityDef=this.entityDefs[i];
+            let groupNames:string[]=[];
+    
+            if(!this.entityDefs){
+                this.entityDefs = await this.getEDefs().toPromise();
             }
-        }
-        
-        entityDef.groups.forEach((g)=>{
-            groups.push(g.name);
+            let entityDef:IEntityDef;
+            for(let i=0;i<this.entityDefs.length;i++){
+                if(this.entityDefs[i].name==type){
+                    entityDef=this.entityDefs[i];
+                }
+            }
+            let groups:IPropertyGroup[]=entityDef.groups;
+            groups.sort((a, b) => a.order - b.order);
+            groups.forEach((g)=>{
+                groupNames.push(g.name);
+            });
+            console.log(`entityDefs.groups: ${JSON.stringify(groupNames)}`);
+            resolve(groupNames);
         });
-        console.log(`entityDefs.groups: ${JSON.stringify(groups)}`);
-        resolve(groups);
-    });
     }
     getEntityDef(type:string):Promise<IEntityDef>{
         return new Promise<IEntityDef>(async (resolve,reject)=>{
