@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
+import {IEntityDef} from '../classes/IEntityDef';
 
 @Component({
   selector: 'entity-def-list',
@@ -6,10 +7,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./entity-def-list.component.css']
 })
 export class EntityDefListComponent implements OnInit {
+    @Input()entities:IEntityDef[]=[];
+    @Output()onSelect:EventEmitter<string> = new EventEmitter<string>();
+    @Output()onDelete:EventEmitter<string> = new EventEmitter<string>();
+    
+    constructor() { }
 
-  constructor() { }
+    ngOnInit() {
+        console.log(`entities ${JSON.stringify(this.entities)}`);
+    }
 
-  ngOnInit() {
-  }
-
+    selected(uuid:string){
+        this.onSelect.emit(uuid);
+    }
+    delete(uuid:string){
+        this.onDelete.emit(uuid);
+    }
 }

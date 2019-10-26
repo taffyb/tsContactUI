@@ -1,4 +1,5 @@
 export class FieldBase<T> {
+  group: string;
   value: T;
   key: string;
   label: string;
@@ -7,6 +8,7 @@ export class FieldBase<T> {
   controlType: string;
 
   constructor(options: {
+      group?:string,
       value?: T,
       key?: string,
       label?: string,
@@ -14,6 +16,7 @@ export class FieldBase<T> {
       order?: number,
       controlType?: string
     } = {}) {
+    this.group = options.group || 'Custom';
     this.value = options.value;
     this.key = options.key || '';
     this.label = options.label || '';

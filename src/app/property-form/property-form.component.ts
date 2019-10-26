@@ -14,7 +14,7 @@ import { HLineField }  from '../classes/field-hr';
 @Component({
   selector: 'property-form',
   templateUrl: './property-form.component.html',
-  styleUrls: ['./property-form.component.css'],
+  styleUrls: ['../css/dynamic-form-common.css'],
   providers: [ FieldControlService ]
 })
 export class PropertyFormComponent implements OnInit {

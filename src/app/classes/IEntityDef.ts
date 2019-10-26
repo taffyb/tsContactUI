@@ -1,8 +1,8 @@
-import {IProperty} from './IProperty'
+import {IPropertyGroup} from './IPropertyGroup';
 
-export interface IEntityDef{
-    name:string;
-    uuid:string;
-    display:string;
-    props:IProperty[];
+export interface IEntityDef {
+    name: string;
+    uuid: string;
+    display: string;
+    groups: IPropertyGroup[];
 }

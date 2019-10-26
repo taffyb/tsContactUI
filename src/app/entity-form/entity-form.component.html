@@ -6,16 +6,24 @@
   	<span class="close" (click)="onCancel()">X</span></h2>
   <form class="form-vertical" (ngSubmit)="onSubmit()" [formGroup]="form">
     <div class="tabbar">
-		<div *ngFor="let tab of ['Details','Notes']" 
+		<div *ngFor="let tab of fieldGroups" 
 			[ngClass]="{
 						 'tab':true,
 					     'active':activeTab==tab
 					   }"
-			(click)="activeTab=tab">{{tab}}</div>
+			(click)="activeTab=tab">{{tab}}
+		</div>
 	</div>
-    <div *ngFor="let field of fields"  class="form-row">
-      <app-field [field]="field" [form]="form"></app-field>
-    </div>
+	
+    <div *ngFor="let group of fieldGroups" 
+			[ngClass]="{
+						 'group':true,
+					     'active':activeTab==group
+					   }" [style.height]="formHeight">
+	    <div *ngFor="let field of getFilteredFields(group)" class="form-row">
+	      <app-field [field]="field" [form]="form"></app-field>
+	    </div>
+	</div>
 	<p>
     <div class="form-row">
       <button type="submit" [disabled]="!form.valid || !formChanged">Save</button> &nbsp;

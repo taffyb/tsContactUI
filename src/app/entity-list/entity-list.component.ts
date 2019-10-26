@@ -5,7 +5,7 @@ import {IEntity} from '../classes/IEntity';
 @Component({
   selector: 'entity-list',
   templateUrl: './entity-list.component.html',
-  styleUrls: ['./entity-list.component.css']
+  styleUrls: ['../css/entity-list-common.css']
 })
 export class EntityListComponent implements OnInit {
   @Input()entities:IEntity[]=[];

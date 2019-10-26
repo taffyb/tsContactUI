@@ -1,6 +1,7 @@
+<button type="button" (click)="showPropertyForm()">Show Property</button>
 <div class="background" (click)="hidePropertyForm()"></div>
 <property-form *ngIf="propertyFormVisible" [property]="properties[0]" (onSave)="saveProperty($event)" (onClose)="hidePropertyForm()"></property-form>
-<button type="button" (click)="showPropertyForm()">Show Property</button>
+
 
 <!-- 
 <div class="form" >

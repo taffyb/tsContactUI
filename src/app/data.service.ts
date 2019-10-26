@@ -61,7 +61,27 @@ export class DataService {
             resolve(this.entityDefs);
         });
     }
-    
+    getEntityDefGroups(type:string):Promise<string[]>{
+        return new Promise<string[]>(async (resolve,reject)=>{
+        let groups:string[]=[];
+
+        if(!this.entityDefs){
+            this.entityDefs = await this.getEDefs().toPromise();
+        }
+        let entityDef:IEntityDef;
+        for(let i=0;i<this.entityDefs.length;i++){
+            if(this.entityDefs[i].name==type){
+                entityDef=this.entityDefs[i];
+            }
+        }
+        
+        entityDef.groups.forEach((g)=>{
+            groups.push(g.name);
+        });
+        console.log(`entityDefs.groups: ${JSON.stringify(groups)}`);
+        resolve(groups);
+    });
+    }
     getEntityDef(type:string):Promise<IEntityDef>{
         return new Promise<IEntityDef>(async (resolve,reject)=>{
             if(!this.entityDefs){

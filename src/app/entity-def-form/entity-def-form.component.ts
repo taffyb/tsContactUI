@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input, Output, EventEmitter } from '@angular/core';
 
 import { FieldControlService } from '../field-control.service';
 import {IProperty} from '../classes/IProperty';
@@ -6,13 +6,14 @@ import {BaseProperty} from '../classes/BaseProperty';
 
 @Component({
   selector: 'entity-def-form',
+  styleUrls: ['../css/dynamic-form-common.css'],
   templateUrl: './entity-def-form.component.html',
-  styleUrls: ['./entity-def-form.component.css'],
   providers: [ FieldControlService ]
 })
 export class EntityDefFormComponent implements OnInit {
   propertyFormVisible:boolean=false;
   properties:IProperty[]=[new BaseProperty()];
+  @Output()onClose:EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() { }
 
@@ -28,6 +29,7 @@ export class EntityDefFormComponent implements OnInit {
   }
   hidePropertyForm(){
       this.propertyFormVisible=false;
+      this.onClose.emit(true);
   }
   saveProperty(p:IProperty){
       console.log(`${JSON.stringify(p)}`);
