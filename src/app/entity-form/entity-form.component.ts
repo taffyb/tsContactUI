@@ -24,7 +24,7 @@ export class EntityFormComponent implements OnInit {
   fieldGroups:string[]=[];
   title: string="Dynamic Form";
   entity:IEntity;
-  form: FormGroup;
+  form: FormGroup= new FormGroup({});
   formChanged:boolean=false;
   payLoad = '';
   newEntitySaved:boolean=false;
@@ -48,12 +48,13 @@ export class EntityFormComponent implements OnInit {
         entityDef = await this.ds.getEntityDef(this.entity.type);
         this.entityType=this.entity.type;
         this.title=this.entity.type;
-        this.fields = this.fs.getFields(entityDef,this.entity);
+        this.fields = this.fs.getEntityFields(entityDef,this.entity);
       }else{
           this.entity=new BaseEntity();
           entityDef = await this.ds.getEntityDef(this.entityType);
           this.title=this.entityType ;
-          this.fields = this.fs.getFields(entityDef,null);
+          console.log(`entityDef: ${JSON.stringify(entityDef)}`);
+          this.fields = this.fs.getEntityFields(entityDef,null);
       }
 
       this.form =this.fcs.toFormGroup(this.fields);
@@ -84,18 +85,18 @@ export class EntityFormComponent implements OnInit {
           return (element.group == group); 
       } 
       let fields:FieldBase<any>[] = this.fields.filter(filterByGroup);
-      console.log(`filtered fields:${group} \n${JSON.stringify(fields)}`);
+//      console.log(`filtered fields:${group} \n${JSON.stringify(fields)}`);
       return fields;
   }
   onCancel(){
       this.onClose.emit(this.newEntitySaved);
   }
   onTitleMouseDown(e){
-      console.log(`MouseDown:${e}`);
+//      console.log(`MouseDown:${e}`);
       this.titleSelected=true;
   }
   onTitleMouseUp(e){
-      console.log(`MouseUp:${e}`);
+//      console.log(`MouseUp:${e}`);
       this.titleSelected=false;
   }
   onTitleMouseMove(e){
@@ -104,7 +105,7 @@ export class EntityFormComponent implements OnInit {
       }
   }
   getIcon():string{
-      let iconPath:string=this.entity.icon || `/assets/${this.entityType}'.svg`;
+      let iconPath:string=this.entity.icon || `/assets/${this.entityType}.svg`;
       return iconPath;
   }
 }

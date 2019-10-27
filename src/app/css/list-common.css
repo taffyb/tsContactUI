@@ -1,12 +1,20 @@
-.entity-list{
+.list{
 	padding-left:5px;
 	padding-top:10px;
 	width:25%;
+	border:1px solid black;
+	float:left;
 }
-.entity-item{
+.list .title{
+	background:gray;
+	color:white;
+	margin-top:0;
+	margin-bottom:5px;
+}
+.list-item{
 	padding-bottom:5px;
 }
-.entity-item:hover{
+.list-item:hover{
 	cursor:pointer;
 	background:rgb(161, 238, 240);
 }
@@ -19,11 +27,11 @@
 	heigh:15px;
 	padding-right:5px;
 }
-.entity-item .delete{
+.list-item .delete{
 	float:right;
 	font-weight: bold;
 	visibility: hidden;
 }
-.entity-item:hover .delete{
+.list-item:hover .delete{
 	visibility: visible;
 }

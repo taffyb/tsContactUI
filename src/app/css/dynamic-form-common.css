@@ -10,6 +10,7 @@ html, body{
 }
 .tabbar{
 	border-bottom:1px solid black;
+	border-top:1px solid gray;
 	padding:0px;
 	margin:0px;
 	height:39px;
@@ -22,6 +23,7 @@ html, body{
   outline: none;
   cursor: pointer;
   padding: 10px 16px;
+  border-right: 1px solid gray;
   transition: 0.3s;
   list-style-type:none;
 }

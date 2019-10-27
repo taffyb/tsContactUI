@@ -17,7 +17,7 @@ export class DataService {
         'Content-Type':  'application/json'
       })
     };
-    entityDefs:IEntityDef[];
+    entityDefList:IEntityDef[];
     entityList:IEntity[];
 
     constructor(private http: HttpClient) {
@@ -55,24 +55,35 @@ export class DataService {
     
     getEntityDefs():Promise<IEntityDef[]>{
         return new Promise<IEntityDef[]>(async (resolve,reject)=>{
-            if(!this.entityDefs){
-                this.entityDefs = await this.getEDefs().toPromise();
+            if(!this.entityDefList){
+                this.entityDefList = await this.getEDefs().toPromise();
 //                console.log(`entityDefs: ${JSON.stringify(this.entityDefs)}`);
             }
-            resolve(this.entityDefs);
+            resolve(this.entityDefList);
         });
     }
+
+
+    getEntityDefList(forceRefresh:boolean=false):Promise<IEntityDef[]>{
+        return new Promise<IEntityDef[]>(async (resolve,reject)=>{
+            if((!this.entityDefList || this.entityDefList===null) || forceRefresh){
+                this.entityDefList = await this.getEDefs().toPromise();
+            }
+            resolve(this.entityDefList);
+        });
+    }   
+    
     getEntityDefGroups(type:string):Promise<string[]>{
         return new Promise<string[]>(async (resolve,reject)=>{
             let groupNames:string[]=[];
     
-            if(!this.entityDefs){
-                this.entityDefs = await this.getEDefs().toPromise();
+            if(!this.entityDefList){
+                this.entityDefList = await this.getEDefs().toPromise();
             }
             let entityDef:IEntityDef;
-            for(let i=0;i<this.entityDefs.length;i++){
-                if(this.entityDefs[i].name==type){
-                    entityDef=this.entityDefs[i];
+            for(let i=0;i<this.entityDefList.length;i++){
+                if(this.entityDefList[i].name==type){
+                    entityDef=this.entityDefList[i];
                 }
             }
             let groups:IPropertyGroup[]=entityDef.groups;
@@ -80,19 +91,19 @@ export class DataService {
             groups.forEach((g)=>{
                 groupNames.push(g.name);
             });
-            console.log(`entityDefs.groups: ${JSON.stringify(groupNames)}`);
+//            console.log(`entityDefs.groups: ${JSON.stringify(groupNames)}`);
             resolve(groupNames);
         });
     }
     getEntityDef(type:string):Promise<IEntityDef>{
         return new Promise<IEntityDef>(async (resolve,reject)=>{
-            if(!this.entityDefs){
-                this.entityDefs = await this.getEDefs().toPromise();
+            if(!this.entityDefList){
+                this.entityDefList = await this.getEDefs().toPromise();
             }
             let entityDef:IEntityDef;
-            for(let i=0;i<this.entityDefs.length;i++){
-                if(this.entityDefs[i].name==type){
-                    entityDef=this.entityDefs[i];
+            for(let i=0;i<this.entityDefList.length;i++){
+                if(this.entityDefList[i].name==type){
+                    entityDef=this.entityDefList[i];
                 }
             }
             if(entityDef){

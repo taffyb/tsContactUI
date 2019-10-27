@@ -5,9 +5,10 @@ import {IEntity} from '../classes/IEntity';
 @Component({
   selector: 'entity-list',
   templateUrl: './entity-list.component.html',
-  styleUrls: ['../css/entity-list-common.css']
+  styleUrls: ['../css/list-common.css']
 })
 export class EntityListComponent implements OnInit {
+  title:string="Entity List";
   @Input()entities:IEntity[]=[];
   @Output()onSelect:EventEmitter<string> = new EventEmitter<string>();
   @Output()onDelete:EventEmitter<string> = new EventEmitter<string>();

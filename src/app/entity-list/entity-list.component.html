@@ -1,5 +1,6 @@
-<div class="entity-list">
-  <div class="entity-item" *ngFor="let entity of entities" >
+<div class="list">
+  <div class="title">{{title}}</div>
+  <div class="list-item" *ngFor="let entity of entities" >
     <span (click)="selected(entity.uuid)">
 	  	<img class="icon-small" src="/assets/{{entity.type}}.svg"/>
 	  	{{entity.display}}

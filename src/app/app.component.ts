@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   isEntityDefFormVisible:boolean=false;
   euuid:string="";
   entityType:string="Person";
+  entityDefType:string="Person";
   entities:IEntity[]=[];
   entityDefs:IEntityDef[];
 
@@ -28,18 +29,24 @@ export class AppComponent implements OnInit {
   }    
   ngOnInit() {
       this.getEntities();
+      this.getEntityDefs();
   }
   async getEntities() {
       this.entities = await this.ds.getEntityList();
   }
+  async getEntityDefs() {
+      this.entityDefs = await this.ds.getEntityDefList();
+//      console.log(`${JSON.stringify(this.entityDefs)}`);
+  }
   showEntityForm(){
       this.isEntityFormVisible=true;
   }
-  showEntityDefForm(){
+  showEntityDefForm(entityDefType:string){
+      this.entityDefType=entityDefType;
       this.isEntityDefFormVisible=true;
   }
   hideEntityForm(status){
-      console.log(`${status}`);
+//      console.log(`${status}`);
       if(status===true){
           this.refreshEntityList();
       }
@@ -48,12 +55,20 @@ export class AppComponent implements OnInit {
   hideEntityDefForm(){
       this.isEntityDefFormVisible=false
   }
-  async delete(uuid:string){
+  async deleteEntity(uuid:string){
       let response = await this.ds.deleteEntity(uuid).toPromise();
       this.refreshEntityList();
+  }
+  async deleteEntityDef(uuid:string){
+      let response = await this.ds.deleteEntity(uuid).toPromise();
+      this.refreshEntityDefList();
   }
   refreshEntityList(){
       this.entities=[];
       this.zone.run(async () => this.entities = await this.ds.getEntityList(true));
+  }
+  refreshEntityDefList(){
+      this.entities=[];
+      this.zone.run(async () => this.entityDefs = await this.ds.getEntityDefList(true));
   }
 }

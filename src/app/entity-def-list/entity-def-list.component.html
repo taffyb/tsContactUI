@@ -1,3 +1,10 @@
-<p>
-  entity-def-list works!
-</p>
+<div class="list">
+  <div class="title">{{title}}</div>
+  <div class="list-item" *ngFor="let entityDef of entityDefs" >
+    <span (click)="selected(entityDef.name)">
+	  	<img class="icon-small" src="/assets/{{entityDef.name}}.svg"/>
+	  	{{entityDef.name}}
+  	</span>
+  	<span class="delete" (click)="delete(entityDef.uuid)">X</span>
+  </div>
+</div>

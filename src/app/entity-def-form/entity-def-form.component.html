@@ -1,17 +1,20 @@
-<button type="button" (click)="showPropertyForm()">Show Property</button>
-<div class="background" (click)="hidePropertyForm()"></div>
+
 <property-form *ngIf="propertyFormVisible" [property]="properties[0]" (onSave)="saveProperty($event)" (onClose)="hidePropertyForm()"></property-form>
-
-
-<!-- 
+<div class="background" (click)="hidePropertyForm()"></div>
 <div class="form" >
   <h2 class="title">
+  
   	<img class="icon-small" src={{getIcon()}}/>
   	{{title}}
-  	<span class="close" (click)="hidePropertyForm()">X</span></h2>
+  	<span class="close" (click)="hidePropertyForm()">X</span>
+  </h2>
+  <p>
+  Type: <input type="text" [(ngModel)]="entityDefType"><br>
+  Display: <input type="text" [(ngModel)]="display">
+  <p>
   <form class="form-vertical" (ngSubmit)="onSubmit()" [formGroup]="form">
     <div class="tabbar">
-		<div *ngFor="let tab of ['Details']" 
+		<div *ngFor="let tab of fieldGroups" 
 			[ngClass]="{
 						 'tab':true,
 					     'active':activeTab==tab
@@ -19,14 +22,21 @@
 			(click)="activeTab=tab">{{tab}}</div>
 			<div class="tab" (click)="addGroup()">+</div>
 	</div>
-    <div *ngFor="let field of fields"  class="form-row">
-      <app-field [field]="field" [form]="form"></app-field>
-    </div>
+    <div *ngFor="let group of fieldGroups" 
+			[ngClass]="{
+						 'group':true,
+					     'active':activeTab==group
+					   }" [style.height]="formHeight">
+	    <div *ngFor="let field of getFilteredFields(group)" class="form-row">
+	      <div class="property" >{{field.key}}<span (click)="showProperties(field.key)">[Edit]</span></div><br>
+	      <!-- <app-field [field]="field" [form]="form"></app-field> -->
+	    </div>
+	</div>
 	<p>
     <div class="form-row">
       <button type="submit" [disabled]="!form.valid || !formChanged">Save</button> &nbsp;
       <button type="button" (click)="hidePropertyForm()">Cancel</button>
     </div>
+    
   </form>
 </div>
- -->
